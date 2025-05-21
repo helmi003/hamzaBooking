@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, no_leading_underscores_for_local_identifiers, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hamzabooking/utils/colors.dart';
@@ -20,7 +18,7 @@ class TextFieldWidget extends StatelessWidget {
     this.type,
     this.controller,
     this.validator,
-    this.autovalidateMode,
+    this.autovalidateMode, {super.key}
   );
 
   @override
