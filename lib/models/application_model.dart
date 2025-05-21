@@ -76,11 +76,11 @@ class ApplicationModel {
   String formatApplicationStatus() {
     switch (status) {
       case ApplicationStatus.pending:
-        return 'Pending';
+        return 'En attente';
       case ApplicationStatus.accepted:
-        return 'Accepted';
+        return 'Accepté';
       case ApplicationStatus.rejected:
-        return 'Rejected';
+        return 'Rejetée';
     }
   }
 
