@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:hamzabooking/models/reservation_model.dart';
 import 'package:hamzabooking/models/user.dart';
-import 'package:hamzabooking/screens/offers/edit_reservation_screen.dart';
+import 'package:hamzabooking/screens/reservations/edit_reservation_screen.dart';
 import 'package:hamzabooking/services/reservationProvider.dart';
 import 'package:hamzabooking/services/userProvider.dart';
 import 'package:hamzabooking/utils/colors.dart';

@@ -96,7 +96,6 @@ class _AddReservationScreenState extends State<AddReservationScreen> {
                               fit: BoxFit.cover,
                             ),
                   ),
-
                   TextFieldWidget(
                     "Titre",
                     true,

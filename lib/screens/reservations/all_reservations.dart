@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hamzabooking/models/reservation_model.dart';
 import 'package:hamzabooking/models/user.dart';
-import 'package:hamzabooking/screens/offers/add_reservation_screen.dart';
+import 'package:hamzabooking/screens/reservations/add_reservation_screen.dart';
 import 'package:hamzabooking/services/userProvider.dart';
 import 'package:hamzabooking/utils/colors.dart';
 import 'package:hamzabooking/widgets/offer_widget.dart';

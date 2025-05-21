@@ -9,7 +9,7 @@ import 'package:hamzabooking/models/reservation_model.dart';
 import 'package:hamzabooking/models/user.dart';
 import 'package:hamzabooking/screens/auth/edit_profile_screen.dart';
 import 'package:hamzabooking/screens/auth/login_screen.dart';
-import 'package:hamzabooking/screens/offers/reservation_details.dart';
+import 'package:hamzabooking/screens/reservations/reservation_details.dart';
 import 'package:hamzabooking/services/userProvider.dart';
 import 'package:hamzabooking/utils/colors.dart';
 import 'package:hamzabooking/widgets/appbar_widget.dart';

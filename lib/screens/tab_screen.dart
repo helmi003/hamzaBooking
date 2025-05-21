@@ -8,7 +8,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:hamzabooking/models/user.dart';
 import 'package:hamzabooking/screens/auth/profile_screen.dart';
-import 'package:hamzabooking/screens/offers/all_reservations.dart';
+import 'package:hamzabooking/screens/reservations/all_reservations.dart';
 import 'package:hamzabooking/services/userProvider.dart';
 import 'package:hamzabooking/utils/colors.dart';
 
