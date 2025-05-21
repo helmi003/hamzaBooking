@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "771157483195",
+    "project_id": "fir-shy-dart",
+    "storage_bucket": "fir-shy-dart.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:771157483195:android:2b8bccabe49ab24a78539e",
+        "android_client_info": {
+          "package_name": "com.example.hamzabooking"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0bwwYrp5-l9XmLI-X7Kga8z5uWSyXYVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
