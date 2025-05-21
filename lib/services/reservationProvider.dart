@@ -52,16 +52,11 @@ class ReservationProvider with ChangeNotifier {
     DateTime offerDate,
   ) async {
     try {
-      if (offer.id.isEmpty) {
-        throw Exception('Offer ID is empty');
-      }
+      if (offer.id.isEmpty) throw Exception('Offer ID is empty');
 
       final docRef =
           FirebaseFirestore.instance.collection('applications').doc();
-
-      if (docRef.id.isEmpty) {
-        throw Exception('Failed to generate document ID');
-      }
+      if (docRef.id.isEmpty) throw Exception('Failed to generate document ID');
 
       final application = ApplicationModel(
         docRef.id,
@@ -79,26 +74,22 @@ class ReservationProvider with ChangeNotifier {
 
       await docRef.set(application.toJson());
 
-      showDialog(
-        context: context,
-        builder:
-            (context) => ErrorPopUp(
-              "Success",
-              'Application submitted successfully!',
-              greenColor,
-            ),
+      // Use rootNavigator to ensure dialog shows even if context changed
+
+      await Navigator.of(context, rootNavigator: true).push(
+        DialogRoute(
+          context: context,
+          builder:
+              (_) => ErrorPopUp(
+                "Success",
+                'Application submitted successfully!',
+                greenColor,
+              ),
+          barrierDismissible: true,
+        ),
       );
     } catch (e) {
-      print('Application error: $e');
-      showDialog(
-        context: context,
-        builder:
-            (context) => ErrorPopUp(
-              "Error",
-              'Failed to apply: ${e.toString()}',
-              redColor,
-            ),
-      );
+      print(e.toString());
     }
   }
 

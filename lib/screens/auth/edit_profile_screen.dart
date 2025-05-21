@@ -33,11 +33,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   bool isLoading = false;
   bool obscureText = true;
-  Rolemodel selectedRole = Rolemodel.user;
 
   void selectRole(Rolemodel role) {
     setState(() {
-      selectedRole = role;
       firstNameController.clear();
       lastNameController.clear();
       organizationNameController.clear();
@@ -75,32 +73,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               child: Column(
                 children: [
                   SizedBox(height: 20.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ButtonWidget(
-                        () {
-                          selectRole(Rolemodel.user);
-                        },
-                        "Utilisateur",
-                        false,
-                        selectedRole == Rolemodel.user,
-                        primaryColor,
-                      ),
-                      SizedBox(width: 10),
-                      ButtonWidget(
-                        () {
-                          selectRole(Rolemodel.manager);
-                        },
-                        "Manageur",
-                        false,
-                        selectedRole == Rolemodel.manager,
-                        primaryColor,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20.h),
-                  if (selectedRole == Rolemodel.user) ...[
+                  if (user.role == Rolemodel.user) ...[
                     TextFieldWidget(
                       "Prénom",
                       false,
@@ -130,7 +103,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       AutovalidateMode.onUserInteraction,
                     ),
                   ],
-                  if (selectedRole == Rolemodel.manager) ...[
+                  if (user.role == Rolemodel.manager) ...[
                     TextFieldWidget(
                       "Nom de l'organisation",
                       false,
@@ -171,13 +144,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
         final userModel = UserModel(
           user.uid,
-          selectedRole == Rolemodel.manager
-              ? organizationNameController.text
-              : "",
-          selectedRole == Rolemodel.user ? firstNameController.text : "",
-          selectedRole == Rolemodel.user ? lastNameController.text : "",
+          user.role == Rolemodel.manager ? organizationNameController.text : "",
+          user.role == Rolemodel.user ? firstNameController.text : "",
+          user.role == Rolemodel.user ? lastNameController.text : "",
           user.email,
-          selectedRole,
+          user.role,
         );
 
         await FirebaseFirestore.instance

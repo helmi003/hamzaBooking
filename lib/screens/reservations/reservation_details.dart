@@ -298,90 +298,105 @@ class _ReservationDetailsState extends State<ReservationDetails> {
     showDialog(
       context: context,
       builder:
-          (context) => AlertDialog(
-            title: Text(
-              "Sélectionnez une date",
-              style: TextStyle(fontSize: 18.sp),
-            ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  widget.offer.startDate.isAtSameMomentAs(widget.offer.endDate)
-                      ? "Date unique: ${DateFormat('dd MMM yyyy').format(widget.offer.startDate)}"
-                      : "Choisissez une date entre ${DateFormat('dd MMM yyyy').format(widget.offer.startDate)} et ${DateFormat('dd MMM yyyy').format(widget.offer.endDate)}",
-                  style: TextStyle(fontSize: 14.sp),
+          (context) => StatefulBuilder(
+            builder: (context, setStateDialog) {
+              return AlertDialog(
+                title: Text(
+                  "Sélectionnez une date",
+                  style: TextStyle(fontSize: 18.sp),
                 ),
-                SizedBox(height: 20.h),
-                ListTile(
-                  title: Text(
-                    selectedDate != null
-                        ? "Date sélectionnée: ${DateFormat('dd MMM yyyy').format(selectedDate!)}"
-                        : widget.offer.startDate.isAtSameMomentAs(
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      widget.offer.startDate.isAtSameMomentAs(
+                            widget.offer.endDate,
+                          )
+                          ? "Date unique: ${DateFormat('dd MMM yyyy').format(widget.offer.startDate)}"
+                          : "Choisissez une date entre ${DateFormat('dd MMM yyyy').format(widget.offer.startDate)} et ${DateFormat('dd MMM yyyy').format(widget.offer.endDate)}",
+                      style: TextStyle(fontSize: 14.sp),
+                    ),
+                    SizedBox(height: 20.h),
+                    ListTile(
+                      title: Text(
+                        selectedDate != null
+                            ? "Date sélectionnée: ${DateFormat('dd MMM yyyy').format(selectedDate!)}"
+                            : widget.offer.startDate.isAtSameMomentAs(
+                              widget.offer.endDate,
+                            )
+                            ? "Date fixe: ${DateFormat('dd MMM yyyy').format(widget.offer.startDate)}"
+                            : "Aucune date sélectionnée",
+                        style: TextStyle(fontSize: 14.sp),
+                      ),
+                      trailing: Icon(Icons.calendar_today, size: 20.sp),
+                      onTap: () async {
+                        if (widget.offer.startDate.isAtSameMomentAs(
+                          widget.offer.endDate,
+                        )) {
+                          setStateDialog(
+                            () => selectedDate = widget.offer.startDate,
+                          );
+                        } else {
+                          final picked = await showDatePicker(
+                            context: context,
+                            initialDate: widget.offer.startDate,
+                            firstDate: widget.offer.startDate,
+                            lastDate: widget.offer.endDate,
+                            helpText: "Sélectionnez votre date",
+                            cancelText: "Annuler",
+                            confirmText: "Confirmer",
+                          );
+                          if (picked != null) {
+                            setStateDialog(() => selectedDate = picked);
+                          }
+                        }
+                      },
+                    ),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      "Annuler",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                  ButtonWidget(
+                    widget.offer.startDate.isAtSameMomentAs(
                           widget.offer.endDate,
                         )
-                        ? "Date fixe: ${DateFormat('dd MMM yyyy').format(widget.offer.startDate)}"
-                        : "Aucune date sélectionnée",
-                    style: TextStyle(fontSize: 14.sp),
+                        ? () {
+                          setStateDialog(
+                            () => selectedDate = widget.offer.startDate,
+                          );
+                          submitApplication(
+                            context,
+                            user,
+                            widget.offer,
+                            selectedDate,
+                          );
+                          Navigator.pop(context);
+                        }
+                        : selectedDate == null
+                        ? () {}
+                        : () {
+                          submitApplication(
+                            context,
+                            user,
+                            widget.offer,
+                            selectedDate,
+                          );
+                          Navigator.pop(context);
+                        },
+                    "Confirmer",
+                    false,
+                    false,
+                    primaryColor,
                   ),
-                  trailing: Icon(Icons.calendar_today, size: 20.sp),
-                  onTap: () async {
-                    if (widget.offer.startDate.isAtSameMomentAs(
-                      widget.offer.endDate,
-                    )) {
-                      setState(() => selectedDate = widget.offer.startDate);
-                    } else {
-                      final picked = await showDatePicker(
-                        context: context,
-                        initialDate: widget.offer.startDate,
-                        firstDate: widget.offer.startDate,
-                        lastDate: widget.offer.endDate,
-                        helpText: "Sélectionnez votre date",
-                        cancelText: "Annuler",
-                        confirmText: "Confirmer",
-                      );
-                      if (picked != null) {
-                        setState(() => selectedDate = picked);
-                      }
-                    }
-                  },
-                ),
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text("Annuler", style: TextStyle(color: Colors.grey)),
-              ),
-              ButtonWidget(
-                widget.offer.startDate.isAtSameMomentAs(widget.offer.endDate)
-                    ? () {
-                      setState(() => selectedDate = widget.offer.startDate);
-                      submitApplication(
-                        context,
-                        user,
-                        widget.offer,
-                        selectedDate,
-                      );
-                      Navigator.pop(context);
-                    }
-                    : selectedDate == null
-                    ? () {}
-                    : () {
-                      submitApplication(
-                        context,
-                        user,
-                        widget.offer,
-                        selectedDate,
-                      );
-                      Navigator.pop(context);
-                    },
-                "Confirmer",
-                false,
-                false,
-                primaryColor,
-              ),
-            ],
+                ],
+              );
+            },
           ),
     );
   }
